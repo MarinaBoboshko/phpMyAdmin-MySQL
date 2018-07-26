@@ -1,0 +1,110 @@
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "pricelist";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "CREATE DATABASE Pricelist";
+if ($conn->query($sql) === TRUE) {
+echo "Database created successfully";
+} else {
+echo "Error creating database or database was already created";
+}
+$sql = "CREATE TABLE docprice (
+id INT(6) UNSIGNED PRIMARY KEY,
+Datetime DATETIME NOT NULL,
+status INT(2) NOT NULL
+)";
+if ($conn->query($sql) === TRUE) {
+    echo "Table docprice created successfully";
+} else {
+    echo "Error creating table: " . $conn->error;
+}
+$sql = "INSERT INTO docprice (id, Datetime, status)
+VALUES ('12','2018-5-13 11:30:08', '0')";
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+$sql = "INSERT INTO docprice (id, Datetime, status)
+VALUES ('14','2016-08-30 09:30:08', '1')";
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+$sql = "INSERT INTO docprice (id, Datetime, status)
+VALUES ('15','2018-03-16 15:30:08', '1')";
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+$sql = "CREATE TABLE product (
+id INT(6) UNSIGNED PRIMARY KEY,
+title VARCHAR(50) NOT NULL,
+description VARCHAR (500),
+status INT(2) NOT NULL
+)";
+if ($conn->query($sql) === TRUE) {
+    echo "Table product created successfully";
+} else {
+    echo "Error creating table: " . $conn->error;
+}
+$sql = "INSERT INTO product (id, title, description, status)
+VALUES ('37','First Product', 'This is a new product','0')";
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+    $sql = "INSERT INTO product (id, title, description, status)
+VALUES ('38','Second Product', 'This is a new product','1')";
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+$sql = "INSERT INTO product (id, title, description, status)
+VALUES ('39','Third Product', 'This is a new product','0')";
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;}
+$sql = "CREATE TABLE docpricebody(
+ID INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+doc_id INT(6) UNSIGNED NOT NULL,
+product_id INT(6) UNSIGNED,
+price FLOAT
+)";
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;}
+
+//$sql ="INSERT INTO pricelist.docpricebody (doc_id, product_id)
+//SELECT pricelist.docprice.id,pricelist.product.id
+//FROM pricelist.docprice, pricelist.product";
+//$sql1= "UPDATE  docpricebody SET price =0 where ID%2=0";
+//$sql1= "UPDATE  docpricebody SET price =873 where ID%2!=0";
+$sql1= "UPDATE  docpricebody SET price=NULL where doc_id=12";
+$sql1= "DELETE FROM docpricebody WHERE product_id=38";
+if ($conn->query($sql) === TRUE){
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+if ($conn->query($sql1) === TRUE){
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql1 . "<br>" . $conn->error;
+}
+
+$conn->close();
